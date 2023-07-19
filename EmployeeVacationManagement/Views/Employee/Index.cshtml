@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EmployeeVacationManagement.Models.EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@*
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsedVacationDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccumulatedVacationDays)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkDays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsedVacationDays)
+                </td>
+                <td>
+                     @Html.DisplayFor(modelItem => item.AccumulatedVacationDays)
+                    </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId  }) 
+                 </td>
+            </tr>
+        }
+    </tbody>
+</table>

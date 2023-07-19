@@ -1,0 +1,83 @@
+﻿@model EmployeeVacationManagement.Models.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Employee Id</label>
+                <input asp-for="EmployeeId" id="employeeid" class="form-control" readonly />
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Employee Name</label>
+                <input asp-for="EmployeeName" class="form-control" readonly />
+                <span asp-validation-for="EmployeeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Work Days</label>
+                <input asp-for="WorkDays" id="WorkDays" class="form-control" max="260" min="0" />
+                <span asp-validation-for="WorkDays" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Used Vacation Days</label>
+                <input asp-for="UsedVacationDays" id="UsedVacationDays" class="form-control" />
+                <span asp-validation-for="UsedVacationDays" class="text-danger"></span>
+                <span id="errormsg" style="color:red;"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Accumulated Vacation Days</label>
+                <input asp-for="AccumulatedVacationDays" class="form-control" readonly />
+                <span asp-validation-for="AccumulatedVacationDays" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Employee Type</label>
+                <input asp-for="EmployeeType" id="employeeType" class="form-control" readonly />
+                <span asp-validation-for="EmployeeType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="btnsubmit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts {
+    <script type="text/javascript">      
+        $("#UsedVacationDays").change(function () {
+            var url = "/Employee/SubmitValidation";
+            var employeeId = $("#employeeid").val();
+            var employeeType = $("#employeeType").val();
+            var workdays = $("#WorkDays").val();
+            var usedvacationdays = $("#UsedVacationDays").val();
+            $.post(url, { id: employeeId, workDays: workdays, usedVacationDays: usedvacationdays, employeeType: employeeType },
+                function (data) {
+                    $("#errormsg").html(data);
+                });
+           
+            var button = document.getElementById("btnsubmit");
+                var errorMsg = $("#errormsg").val();
+                if (errorMsg.trim() == "") {
+                    button.disabled = false;
+                } else {
+                    button.disabled = true;
+                }
+           
+        })
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
